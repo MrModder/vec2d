@@ -295,6 +295,88 @@
 <span id="253">253</span>
 <span id="254">254</span>
 <span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2015 Nicholas Bishop</span>
 <span class='comment'>//</span>
@@ -350,7 +432,17 @@
     <span class='ident'>size</span>: <span class='ident'>Size</span>
 }
 
-<span class='doccomment'>/// Mutable iterator over a Vec2D</span>
+<span class='doccomment'>/// Iterator over a rectangle within a Vec2D</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RectIter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Elem</span>: <span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='ident'>grid</span>: <span class='ident'>std</span>::<span class='ident'>marker</span>::<span class='ident'>PhantomData</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Vec2D</span><span class='op'>&lt;</span><span class='ident'>Elem</span><span class='op'>&gt;&gt;</span>,
+
+    <span class='ident'>rect</span>: <span class='ident'>Rect</span>,
+    <span class='ident'>cur_elem</span>: <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>Elem</span>,
+    <span class='ident'>cur_coord</span>: <span class='ident'>Coord</span>,
+    <span class='ident'>stride</span>: <span class='ident'>isize</span>
+}
+
+<span class='doccomment'>/// Mutable iterator over a rectangle within a Vec2D</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RectIterMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Elem</span>: <span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='ident'>grid</span>: <span class='ident'>std</span>::<span class='ident'>marker</span>::<span class='ident'>PhantomData</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>Vec2D</span><span class='op'>&lt;</span><span class='ident'>Elem</span><span class='op'>&gt;&gt;</span>,
 
@@ -406,6 +498,14 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>contains_coord</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>coord</span>: <span class='ident'>Coord</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='ident'>coord</span>.<span class='ident'>x</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>width</span> <span class='op'>&amp;&amp;</span> <span class='ident'>coord</span>.<span class='ident'>y</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>height</span>
     }
+
+    <span class='doccomment'>/// Create a rectangle starting at (0, 0) with `self`&#39;s size.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>rect</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Rect</span> {
+        <span class='ident'>Rect</span> {
+            <span class='ident'>min_coord</span>: <span class='ident'>Coord</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>),
+            <span class='ident'>max_coord</span>: <span class='ident'>Coord</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>width</span> <span class='op'>-</span> <span class='number'>1</span>, <span class='self'>self</span>.<span class='ident'>height</span> <span class='op'>-</span> <span class='number'>1</span>)
+        }
+    }
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>Elem</span>: <span class='ident'>Copy</span><span class='op'>&gt;</span> <span class='ident'>Vec2D</span><span class='op'>&lt;</span><span class='ident'>Elem</span><span class='op'>&gt;</span> {
@@ -433,6 +533,28 @@
         }
     }
 
+    <span class='kw'>fn</span> <span class='ident'>stride</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>rect</span>: <span class='kw-2'>&amp;</span><span class='ident'>Rect</span>) <span class='op'>-&gt;</span> <span class='ident'>isize</span> {
+        (<span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>width</span> <span class='op'>+</span> <span class='number'>1</span> <span class='op'>-</span> <span class='ident'>rect</span>.<span class='ident'>width</span>()) <span class='kw'>as</span> <span class='ident'>isize</span>
+    }
+
+    <span class='doccomment'>/// Create an iterator over a rectangular region of the</span>
+    <span class='doccomment'>/// Vec2D. None is returned if the given `rect` does not fit</span>
+    <span class='doccomment'>/// entirely within the Vec2D.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>rect_iter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>rect</span>: <span class='ident'>Rect</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>RectIter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Elem</span><span class='op'>&gt;&gt;</span> {
+        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>contains_coord</span>(<span class='ident'>rect</span>.<span class='ident'>max_coord</span>) {
+            <span class='prelude-val'>Some</span>(<span class='ident'>RectIter</span> {
+                <span class='ident'>grid</span>: <span class='ident'>std</span>::<span class='ident'>marker</span>::<span class='ident'>PhantomData</span>,
+                <span class='ident'>stride</span>: <span class='self'>self</span>.<span class='ident'>stride</span>(<span class='kw-2'>&amp;</span><span class='ident'>rect</span>),
+                <span class='ident'>cur_elem</span>: <span class='self'>self</span>.<span class='ident'>elems</span>.<span class='ident'>as_ptr</span>(),
+                <span class='ident'>rect</span>: <span class='ident'>rect</span>,
+                <span class='ident'>cur_coord</span>: <span class='ident'>rect</span>.<span class='ident'>min_coord</span>
+            })
+        }
+        <span class='kw'>else</span> {
+            <span class='prelude-val'>None</span>
+        }
+    }
+
     <span class='doccomment'>/// Create a mutable iterator over a rectangular region of the</span>
     <span class='doccomment'>/// Vec2D. None is returned if the given `rect` does not fit</span>
     <span class='doccomment'>/// entirely within the Vec2D.</span>
@@ -440,11 +562,35 @@
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>contains_coord</span>(<span class='ident'>rect</span>.<span class='ident'>max_coord</span>) {
             <span class='prelude-val'>Some</span>(<span class='ident'>RectIterMut</span> {
                 <span class='ident'>grid</span>: <span class='ident'>std</span>::<span class='ident'>marker</span>::<span class='ident'>PhantomData</span>,
-                <span class='ident'>stride</span>: (<span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>width</span> <span class='op'>-</span> <span class='ident'>rect</span>.<span class='ident'>width</span>() <span class='op'>+</span> <span class='number'>1</span>) <span class='kw'>as</span> <span class='ident'>isize</span>,
+                <span class='ident'>stride</span>: <span class='self'>self</span>.<span class='ident'>stride</span>(<span class='kw-2'>&amp;</span><span class='ident'>rect</span>),
                 <span class='ident'>cur_elem</span>: <span class='self'>self</span>.<span class='ident'>elems</span>.<span class='ident'>as_mut_ptr</span>(),
                 <span class='ident'>rect</span>: <span class='ident'>rect</span>,
                 <span class='ident'>cur_coord</span>: <span class='ident'>rect</span>.<span class='ident'>min_coord</span>
             })
+        }
+        <span class='kw'>else</span> {
+            <span class='prelude-val'>None</span>
+        }
+    }
+}
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Elem</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>RectIter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Elem</span><span class='op'>&gt;</span> {
+    <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> (<span class='ident'>Coord</span>, <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Elem</span>);
+
+    <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Self</span>::<span class='ident'>Item</span><span class='op'>&gt;</span> {
+        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cur_coord</span>.<span class='ident'>y</span> <span class='op'>&lt;=</span> <span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>max_coord</span>.<span class='ident'>y</span> {
+            <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> (<span class='self'>self</span>.<span class='ident'>cur_coord</span>, <span class='kw'>unsafe</span> { <span class='kw-2'>&amp;</span> <span class='op'>*</span><span class='self'>self</span>.<span class='ident'>cur_elem</span> });
+
+            <span class='self'>self</span>.<span class='ident'>cur_coord</span>.<span class='ident'>x</span> <span class='op'>+=</span> <span class='number'>1</span>;
+            <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cur_coord</span>.<span class='ident'>x</span> <span class='op'>&lt;=</span> <span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>max_coord</span>.<span class='ident'>x</span> {
+                <span class='kw'>unsafe</span> { <span class='self'>self</span>.<span class='ident'>cur_elem</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cur_elem</span>.<span class='ident'>offset</span>(<span class='number'>1</span>); }
+            }
+            <span class='kw'>else</span> {
+                <span class='self'>self</span>.<span class='ident'>cur_coord</span>.<span class='ident'>x</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>min_coord</span>.<span class='ident'>x</span>;
+                <span class='self'>self</span>.<span class='ident'>cur_coord</span>.<span class='ident'>y</span> <span class='op'>+=</span> <span class='number'>1</span>;
+                <span class='kw'>unsafe</span> { <span class='self'>self</span>.<span class='ident'>cur_elem</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cur_elem</span>.<span class='ident'>offset</span>(<span class='self'>self</span>.<span class='ident'>stride</span>); }
+            }
+            <span class='prelude-val'>Some</span>(<span class='ident'>result</span>)
         }
         <span class='kw'>else</span> {
             <span class='prelude-val'>None</span>
@@ -534,6 +680,10 @@
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>size</span>.<span class='ident'>contains_coord</span>(<span class='ident'>Coord</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>)), <span class='boolval'>true</span>);
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>size</span>.<span class='ident'>contains_coord</span>(<span class='ident'>Coord</span>::<span class='ident'>new</span>(<span class='number'>4</span>, <span class='number'>1</span>)), <span class='boolval'>false</span>);
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>size</span>.<span class='ident'>contains_coord</span>(<span class='ident'>Coord</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>3</span>)), <span class='boolval'>false</span>);
+
+        <span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='ident'>size</span>.<span class='ident'>rect</span>();
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rect</span>.<span class='ident'>min_coord</span>, <span class='ident'>Coord</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rect</span>.<span class='ident'>max_coord</span>, <span class='ident'>Coord</span>::<span class='ident'>new</span>(<span class='number'>2</span>, <span class='number'>1</span>));
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -549,6 +699,20 @@
         }
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>actual_coords</span>, [(<span class='number'>0</span>, <span class='number'>0</span>), (<span class='number'>1</span>, <span class='number'>0</span>), (<span class='number'>0</span>, <span class='number'>1</span>), (<span class='number'>1</span>, <span class='number'>1</span>)]);
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>grid</span>.<span class='ident'>elems</span>, [<span class='op'>-</span><span class='number'>1</span>, <span class='op'>-</span><span class='number'>2</span>, <span class='op'>-</span><span class='number'>3</span>, <span class='op'>-</span><span class='number'>4</span>]);
+    }
+
+    <span class='attribute'>#[<span class='ident'>test</span>]</span>
+    <span class='kw'>fn</span> <span class='ident'>test_two_iterators</span>() {
+        <span class='kw'>let</span> <span class='ident'>size</span> <span class='op'>=</span> <span class='ident'>Size</span>::<span class='ident'>new</span>(<span class='number'>2</span>, <span class='number'>1</span>);
+        <span class='kw'>let</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='ident'>Vec2D</span>::<span class='ident'>from_vec</span>(<span class='ident'>size</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>0</span>, <span class='number'>1</span>]).<span class='ident'>unwrap</span>();
+
+        <span class='kw'>let</span> <span class='ident'>iter1</span> <span class='op'>=</span> <span class='ident'>v</span>.<span class='ident'>rect_iter</span>(<span class='ident'>size</span>.<span class='ident'>rect</span>()).<span class='ident'>unwrap</span>();
+        <span class='kw'>let</span> <span class='ident'>iter2</span> <span class='op'>=</span> <span class='ident'>v</span>.<span class='ident'>rect_iter</span>(<span class='ident'>size</span>.<span class='ident'>rect</span>()).<span class='ident'>unwrap</span>();
+        
+        <span class='kw'>for</span> ((<span class='ident'>coord1</span>, <span class='ident'>elem1</span>), (<span class='ident'>coord2</span>, <span class='ident'>elem2</span>)) <span class='kw'>in</span> <span class='ident'>iter1</span>.<span class='ident'>zip</span>(<span class='ident'>iter2</span>) {
+            <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>coord1</span>, <span class='ident'>coord2</span>);
+            <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>elem1</span>, <span class='ident'>elem2</span>);
+        }
     }
 }
 </pre>

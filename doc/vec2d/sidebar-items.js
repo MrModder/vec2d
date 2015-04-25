@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Coord","2D coordinate"],["Rect","Rectangle defined by inclusive minimum and maximum coordinates"],["RectIterMut","Mutable iterator over a Vec2D"],["Size","Rectangle dimensions"],["Vec2D","Container for 2D data"]]});
+initSidebarItems({"struct":[["Coord","2D coordinate"],["Rect","Rectangle defined by inclusive minimum and maximum coordinates"],["RectIter","Iterator over a rectangle within a Vec2D"],["RectIterMut","Mutable iterator over a rectangle within a Vec2D"],["Size","Rectangle dimensions"],["Vec2D","Container for 2D data"]]});
