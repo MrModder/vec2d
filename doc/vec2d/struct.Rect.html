@@ -53,6 +53,9 @@
 <div class='docblock'><p>Calculate rectangle height</p>
 </div><h4 id='method.size' class='method'><code>fn <a href='#method.size' class='fnname'>size</a>(&amp;self) -&gt; <a class='struct' href='../vec2d/struct.Size.html' title='vec2d::Size'>Size</a></code></h4>
 <div class='docblock'><p>Calculate rectangle size</p>
+</div><h4 id='method.contains_coord' class='method'><code>fn <a href='#method.contains_coord' class='fnname'>contains_coord</a>(&amp;self, coord: <a class='struct' href='../vec2d/struct.Coord.html' title='vec2d::Coord'>Coord</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>Return true if the coordinate is between <code>min_coord</code> and
+<code>max_coord</code> (inclusive).</p>
 </div></div><h3 class='impl'><code>impl <a class='struct' href='../vec2d/struct.Rect.html' title='vec2d::Rect'>Rect</a></code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(min_coord: <a class='struct' href='../vec2d/struct.Coord.html' title='vec2d::Coord'>Coord</a>, max_coord: <a class='struct' href='../vec2d/struct.Coord.html' title='vec2d::Coord'>Coord</a>) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../vec2d/struct.Rect.html' title='vec2d::Rect'>Rect</a>&gt;</code></h4>
 <div class='docblock'><p>Create a new Rect defined by inclusive minimum and maximum
 coordinates. If min_coord is greater than max_coord on either

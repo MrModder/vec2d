@@ -58,6 +58,11 @@ length of <code>src</code>.</p>
 <div class='docblock'><p>Create an iterator over a rectangular region of the
 Vec2D. None is returned if the given <code>rect</code> does not fit
 entirely within the Vec2D.</p>
+</div><h4 id='method.rect_iter_at' class='method'><code>fn <a href='#method.rect_iter_at' class='fnname'>rect_iter_at</a>&lt;'a&gt;(&amp;'a self, rect: <a class='struct' href='../vec2d/struct.Rect.html' title='vec2d::Rect'>Rect</a>, start: <a class='struct' href='../vec2d/struct.Coord.html' title='vec2d::Coord'>Coord</a>) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../vec2d/struct.RectIter.html' title='vec2d::RectIter'>RectIter</a>&lt;'a, Elem&gt;&gt;</code></h4>
+<div class='docblock'><p>Create an iterator over a rectangular region of the Vec2D with
+the <code>start</code> coord. None is returned if the given <code>rect</code> does
+not fit entirely within the Vec2D or if the <code>start</code> coord is
+not within <code>rect</code>.</p>
 </div><h4 id='method.rect_iter_mut' class='method'><code>fn <a href='#method.rect_iter_mut' class='fnname'>rect_iter_mut</a>&lt;'a&gt;(&amp;'a mut self, rect: <a class='struct' href='../vec2d/struct.Rect.html' title='vec2d::Rect'>Rect</a>) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../vec2d/struct.RectIterMut.html' title='vec2d::RectIterMut'>RectIterMut</a>&lt;'a, Elem&gt;&gt;</code></h4>
 <div class='docblock'><p>Create a mutable iterator over a rectangular region of the
 Vec2D. None is returned if the given <code>rect</code> does not fit
